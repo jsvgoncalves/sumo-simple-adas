@@ -11,7 +11,6 @@ import os
 import sys
 import optparse
 import subprocess
-import random
 import socket
 
 # we need to import python modules from the $SUMO_HOME/tools directory
@@ -48,14 +47,20 @@ def run():
     # data = sock.recv(4096)
     # print (data)
 
-    # Added
+    # Lanes
     lanes = traci.lane.getIDList()
     rlane = lanes[0]
     for lane in lanes:
         ms = float(traci.lane.getMaxSpeed(lane))
         kmh = ms * 3.6
         print 'Lane ' + lane + ' ' + str(kmh) + 'km/h'
-    # Added #
+    # Lanes #
+
+    # Vehicles
+    # add(vehID, routeID, depart=-2, pos=0, speed=0, lane=0,
+    #     typeID='DEFAULT_VEHTYPE')
+    traci.vehicle.add("veh1", "route0", 5)
+    # Vehicles #
     while traci.simulation.getMinExpectedNumber() > 0:
         ms = float(traci.lane.getLastStepMeanSpeed(rlane))
         kmh = ms * 3.6
